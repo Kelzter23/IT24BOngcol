@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Applet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 400px; 
+            margin: 0 auto; 
+        }
+
+        .log-container {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            margin-top: 150px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Event Logger</h1>
+        
+        <div class="d-flex justify-content-center gap-2"> 
+            <button id="logButton" class="btn btn-primary">Login</button>
+            <button id="deleteButton" class="btn btn-danger">Delete </button>
+        </div>
+
+        <div class="log-container" id="logContainer"></div>
+        <h3 class="text-center">Total Logs: <span id="logCount">0</span></h3>
+    </div>
+
+    <script>
+        let logCount = 0;
+
+        document.getElementById('logButton').addEventListener('click', function() {
+            logCount++;
+            const logContainer = document.getElementById('logContainer');
+
+            
+            const logEntry = document.createElement('div');
+            const currentDate = new Date().toLocaleString();
+            logEntry.textContent = `Log ${logCount}: ${currentDate}`;
+            logEntry.className = 'log-entry';  
+            logContainer.appendChild(logEntry);
+
+            
+            document.getElementById('logCount').textContent = logCount;
+        });
+
+        document.getElementById('deleteButton').addEventListener('click', function() {
+            const logContainer = document.getElementById('logContainer');
+            const logs = logContainer.getElementsByClassName('log-entry');
+
+            
+            if (logs.length > 0) {
+                logContainer.removeChild(logs[logs.length - 1]); 
+                logCount--; 
+                document.getElementById('logCount').textContent = logCount; 
+            }
+        });
+    </script>
+</body>
+</html>
